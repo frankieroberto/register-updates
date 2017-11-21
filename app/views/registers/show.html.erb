@@ -1,0 +1,7 @@
+<h1><%= @register.name %></h1>
+
+<% @update_days.each do |date| %>
+
+  <%= render 'shared/update_day', day: date, include_register: false, register: @register %>
+
+<% end %>

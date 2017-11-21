@@ -1,0 +1,8 @@
+<ul class="entry-changes">
+  <% entries.each do |entry| %>
+    <li><%= link_to entry.name, register_record_path(register_code, entry.values.to_h[register_code]) %>:
+
+      <%= render 'shared/field_changes', entry: entry %>
+    </li>
+  <% end %>
+</ul>

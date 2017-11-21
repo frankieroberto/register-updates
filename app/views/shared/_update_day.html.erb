@@ -1,0 +1,70 @@
+<% max_entries_to_show ||= 6 %>
+
+<h2>
+  <% date = day[0].strftime("%d %b %Y") %>
+
+  <% if defined?(register) %>
+    <%= link_to date, register_year_month_day_path(register_id: register.code, year_id: day[0].year, month_id: day[0].strftime('%m'), id: day[0].strftime('%d')).html_safe %>
+  <% else %>
+    <%= date %>
+  <% end %>
+</h2>
+
+<% day[1].each do |register_update| %>
+
+  <p>
+
+    <% if register_update.new_entries_count > 0 && register_update.updated_count == 0 %>
+      <% intro = pluralize(register_update.new_entries_count, "new entry") + " added" %>
+    <% elsif register_update.new_entries_count == 0 && register_update.updated_count > 0 %>
+      <% intro = pluralize(register_update.updated_count, "entry") + " updated" %>
+    <% else %>
+      <% intro = pluralize(register_update.new_entries_count, "new entry") + " added and " + pluralize(register_update.updated_count, "entry") + " updated" %>
+    <% end %>
+
+    <% if defined?(include_register) && include_register %>
+      <%= intro %> within <%= link_to register_update.register_name, register_path(register_update.register_code) %>:
+    <% else %>
+      <%= intro + ":" %>
+    <% end %>
+  </p>
+
+  <% if register_update.new_entries_count > 0 %>
+
+    <% entries_added = Entry
+      .where(register_code: register_update.register_code)
+      .where(timestamp: day[0].beginning_of_day...day[0].end_of_day)
+      .where(previous_entry_id: nil)
+      .order(:timestamp)
+      .limit(max_entries_to_show + 1) %>
+
+    <% others_to_show = entries_added.size > max_entries_to_show %>
+
+    <ul class="<%= 'with-others' if others_to_show %>">
+      <% entries_added[0..(max_entries_to_show-1)].each do |entry| %>
+        <% if entry.values %>
+          <li><%= link_to entry.name, register_record_path(register_update.register_code, entry.values.to_h[register_update.register_code]) %></li>
+        <% end %>
+      <% end %>
+    </ul>
+
+    <% if others_to_show %>
+      <p class="others">...and <%= pluralize(register_update.new_entries_count - max_entries_to_show, 'other') %>.</p>
+    <% end %>
+
+  <% end %>
+
+  <% if register_update.updated_count > 0 %>
+
+    <% entries_updated = Entry
+      .where(register_code: register_update.register_code)
+      .where(timestamp: day[0].beginning_of_day...day[0].end_of_day)
+      .where.not(previous_entry_id: nil)
+      .order(:timestamp)
+      .limit(max_entries_to_show) %>
+
+    <%= render 'shared/entry_changes', entries: entries_updated, register_code: register_update.register_code %>
+
+  <% end %>
+
+<% end %>

@@ -1,0 +1,52 @@
+
+
+<h1><%= @entries[0].name %></h1>
+
+<table>
+  <% @entries[0].values.except(@register.code).each do |key,value| %>
+    <% field_record = Record.find_by(register_code: 'field', key: key) %>
+    <% associated_register = Register.find_by(code: key) %>
+    <tr>
+      <th><%= key %></th>
+      <td>
+        <% if (field_record && field_record.values['register'].present?) || associated_register %>
+
+          <% associated_record = Record.find_by(register_code: key, key: value) %>
+
+          <% if associated_record %>
+            <%= link_to associated_record.name, register_record_path(associated_record.register_code, associated_record.key) %>
+          <% else %>
+            <%= link_to field_record.values['register'], register_path(field_record.values['register']) %>:<%= value %>
+          <% end %>
+
+        <% elsif field_record && field_record.values['datatype'] == 'datetime' %>
+
+          <%= Date.parse(value).to_s(:long) %>
+
+        <% elsif field_record && field_record.values['datatype'] == 'url' %>
+          <%= link_to value, value %>
+        <% else %>
+          <%= value %>
+        <% end %>
+
+
+        </td>
+    </tr>
+  <% end %>
+</table>
+
+<% if @entries[1..-1].size > 0 %>
+
+  <h2>Previous updates</h2>
+
+  <% @entries[0..-2].each do |entry| %>
+    <h3><%= entry.timestamp.strftime("%d %b %Y") %></h3>
+    <%= render 'shared/field_changes', entry: entry %>
+  <% end %>
+
+  <h3><%= @entries[-1].timestamp.strftime("%d %b %Y") %></h3>
+
+  <p>Entry added</p>
+
+<% end %>
+

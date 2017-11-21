@@ -1,0 +1,5 @@
+
+<h1>Updates on <%= @day.strftime("%d %b %Y") %> to <%= link_to @register.name, @register %></h1>
+
+<%= render 'shared/update_day', day: @update_day.first, include_register: false,
+  register: @register, max_entries_to_show: 5000 %>

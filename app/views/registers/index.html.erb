@@ -1,0 +1,10 @@
+<h1>Registers</h1>
+
+
+<% @registers.each do |register| %>
+  <h2><%= link_to register.name, register_path(register.code) %></h2>
+
+  <p><%= pluralize(register.records.count, 'record') %></p>
+  <p>Last updated: <%= register.entries.order('timestamp').reverse_order.first.timestamp.to_s(:long) %></p>
+  </li>
+<% end %>
