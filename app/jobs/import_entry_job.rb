@@ -10,6 +10,7 @@ class ImportEntryJob < ApplicationJob
 
     entry.previous_entry_id = entry.previous_entry.try(:id)
 
+    puts url
     begin
       file = open(url).read
 
@@ -19,8 +20,7 @@ class ImportEntryJob < ApplicationJob
 
 
 
-    rescue OpenURI::HTTPError => e
-      puts url
+    rescue OpenURI::HTTPError, SocketError => e
       puts e
 
       raise e

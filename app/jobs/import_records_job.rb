@@ -30,7 +30,7 @@ class ImportRecordsJob < ApplicationJob
         record.save
       end
 
-    rescue OpenURI::HTTPError => e
+    rescue OpenURI::HTTPError, SocketError => e
       puts url
       puts e
 

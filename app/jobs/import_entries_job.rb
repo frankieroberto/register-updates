@@ -12,6 +12,7 @@ class ImportEntriesJob < ApplicationJob
     url = "#{register.url}/entries.json?limit=5000&start=0"
 
 
+    puts url
     begin
 
       file = open(url).read
@@ -40,8 +41,7 @@ class ImportEntriesJob < ApplicationJob
         end
       end
 
-    rescue OpenURI::HTTPError => e
-      puts url
+    rescue OpenURI::HTTPError, SocketError => e
       puts e
 
     end
