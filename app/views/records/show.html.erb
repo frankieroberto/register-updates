@@ -21,7 +21,11 @@
 
         <% elsif field_record && field_record.values['datatype'] == 'datetime' %>
 
-          <%= Date.parse(value).to_s(:long) %>
+          <% begin %>
+            <%= Date.parse(value).to_s(:long) %>
+          <% rescue ArgumentError %>
+            <%= value %>
+          <% end %>
 
         <% elsif field_record && field_record.values['datatype'] == 'url' %>
           <%= link_to value, value %>
