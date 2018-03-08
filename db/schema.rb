@@ -14,7 +14,6 @@ ActiveRecord::Schema.define(version: 20171020214802) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-  enable_extension "unaccent"
 
   create_table "entries", force: :cascade do |t|
     t.integer "record_id", null: false
