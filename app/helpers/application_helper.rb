@@ -4,7 +4,7 @@ module ApplicationHelper
 
     if field
 
-      curie_format = /([a-z\-]+)\:(.+)/
+      curie_format = /([a-z\-]+)\:([^\/].+)/
 
       match_result = curie_format.match(field)
 
