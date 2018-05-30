@@ -14,7 +14,7 @@ class ImportRecordsJob < ApplicationJob
     puts url
     begin
 
-      file = open(url).read
+      file = open(url, "Authorization" => ENV.fetch('API_KEY')).read
 
       json = JSON.parse(file)
 

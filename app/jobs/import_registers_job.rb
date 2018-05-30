@@ -7,7 +7,7 @@ class ImportRegistersJob < ApplicationJob
 
     registers_changed_count = 0
 
-  	file = open('https://register.register.gov.uk/records.json?page-size=5000').read
+  	file = open('https://register.register.gov.uk/records.json?page-size=5000', "Authorization" => ENV.fetch('API_KEY')).read
 
   	json = JSON.parse(file)
 
