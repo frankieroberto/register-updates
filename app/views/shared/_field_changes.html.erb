@@ -1,8 +1,8 @@
 <ul>
   <% entry.changed_fields.each do |field| %>
     <li><%= field[:key] %> changed from
-      <del><%= linked_field(field[:previous]) %></del> to
-      <ins><%= linked_field(entry.values[field[:key]]) %></ins>
+      <del><%= linked_named_field(field[:key], field[:previous]) %></del> to
+      <ins><%= linked_named_field(field[:key], entry.values[field[:key]]) %></ins>
     </li>
   <% end %>
 </ul>
