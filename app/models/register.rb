@@ -7,4 +7,9 @@ class Register < ApplicationRecord
     "https://#{code}.#{host || 'register.gov.uk'}"
   end
 
+  def update_last_updated_at!
+    self.last_updated_at = entries.order('timestamp').reverse_order.first.try(&:timestamp)
+    save!
+  end
+
 end

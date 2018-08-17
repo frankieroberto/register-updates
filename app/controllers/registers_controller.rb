@@ -14,7 +14,7 @@ class RegistersController < ApplicationController
   end
 
   def index
-    @registers = Register.all
+    @registers = Register.order(:last_updated_at).reverse_order
   end
 
 end

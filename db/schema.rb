@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171020214802) do
+ActiveRecord::Schema.define(version: 20180817084142) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -38,6 +38,7 @@ ActiveRecord::Schema.define(version: 20171020214802) do
     t.text "registry", null: false
     t.text "phase", null: false
     t.text "host"
+    t.datetime "last_updated_at"
     t.index ["code"], name: "index_registers_on_code", unique: true
   end
 

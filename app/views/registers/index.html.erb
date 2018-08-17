@@ -6,9 +6,7 @@
 
   <p><%= pluralize(register.records.count, 'record') %></p>
 
-  <% first_entry = register.entries.order('timestamp').reverse_order.first %>
-  <% if first_entry %>
-    <p>Last updated: <%= first_entry.timestamp.to_s(:long) %></p>
+  <% if register.last_updated_at %>
+    <p>Last updated: <%= register.last_updated_at.to_s(:long) %></p>
   <% end %>
-  </li>
 <% end %>
