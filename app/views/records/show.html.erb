@@ -4,17 +4,24 @@
 
 <h1><%= @entries[0].name %></h1>
 
-<table>
-  <% @entries[0].values.except(@register.code).each do |key,value| %>
-    <% field_record = Record.find_by(register_code: 'field', key: key) %>
-    <% associated_register = Register.find_by(code: key) %>
-    <tr>
-      <th><%= field_link(key) %></th>
-      <td>
-        <%= linked_named_field(key, value) %>
-      </td>
-    </tr>
-  <% end %>
+<table class="fields-and-values">
+  <thead>
+    <th>Field</th>
+    <th>Value</th>
+  </thead>
+
+  <tbody>
+    <% @entries[0].values.except(@register.code).each do |key,value| %>
+      <% field_record = Record.find_by(register_code: 'field', key: key) %>
+      <% associated_register = Register.find_by(code: key) %>
+      <tr>
+        <th><%= field_link(key) %></th>
+        <td>
+          <%= linked_named_field(key, value) %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
 </table>
 
 <% if @entries[1..-1].size > 0 %>

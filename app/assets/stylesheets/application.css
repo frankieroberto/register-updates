@@ -100,3 +100,27 @@ li {
   margin-top: 0;
   margin-left: 40px;
 }
+
+.fields-and-values {
+  border-collapse: collapse;
+  border-width: 0;
+  width: 100%;
+}
+
+.fields-and-values tr {
+  border-width: 0;
+}
+
+.fields-and-values th, td {
+  text-align: left;
+  border-style: solid;
+  border-color: lightgrey;
+  border-width: 1px 0;
+  padding: 10px 0;
+  line-height: 1.2em;
+}
+
+.fields-and-values thead th {
+  border-top-width: 0;
+}
+

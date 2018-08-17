@@ -50,7 +50,7 @@ module ApplicationHelper
       else
         key
       end
-    end.join(', ').html_safe
+    end.join('<br>').html_safe
 
   end
 
