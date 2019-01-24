@@ -8,18 +8,17 @@ module ApplicationHelper
 
   def linked_named_field(field, keys)
 
+    field_record = Record.find_by(register_code: 'field', key: field)
+
     Array(keys).collect do |key|
 
-      curie_format = /([a-z\-]+)\:([^\/].+)/
+      curie_format = /([a-z\-\d]+)\:([^\/]+)/
 
       if match_result = curie_format.match(key)
 
         associated_record = Record.find_by(register_code: match_result[1], key: match_result[2])
 
       else
-
-        field_record = Record.find_by(register_code: 'field', key: field)
-
         associated_register_code = field_record.values['register']
 
         if associated_register_code
