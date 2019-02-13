@@ -39,3 +39,13 @@
 
 <% end %>
 
+
+<% if @record.records_referencing_this_one.length > 0 %>
+  <h2>Referencing records</h2>
+
+  <ul>
+    <% @record.records_referencing_this_one.each do |referencing_record| %>
+      <li><%= link_to referencing_record.name, register_record_path(referencing_record.register_code, referencing_record.key) %></li>
+    <% end %>
+  </ul>
+<% end %>

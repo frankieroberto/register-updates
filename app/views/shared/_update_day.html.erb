@@ -1,7 +1,7 @@
 <% max_entries_to_show ||= 6 %>
 
 <h2>
-  <% date = day[0].strftime("%d %b %Y") %>
+  <% date = day[0].strftime("%e %b %Y") %>
 
   <% if defined?(register) %>
     <%= link_to date, register_year_month_day_path(register_id: register.code, year_id: day[0].year, month_id: day[0].strftime('%m'), id: day[0].strftime('%d')).html_safe %>
@@ -49,7 +49,7 @@
     </ul>
 
     <% if others_to_show %>
-      <p class="others">...and <%= pluralize(register_update.new_entries_count - max_entries_to_show, 'other') %>.</p>
+      <p class="others">...and <%= link_to pluralize(register_update.new_entries_count - max_entries_to_show, 'other'), register_year_month_day_path(register_update.register_code,  year_id: day[0].year, month_id: day[0].strftime('%m'), id: day[0].strftime('%d')) %>.</p>
     <% end %>
 
   <% end %>
